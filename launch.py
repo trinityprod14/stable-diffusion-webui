@@ -107,11 +107,11 @@ def version_check(commit):
 def prepare_enviroment():
     torch_command = os.environ.get('TORCH_COMMAND', "pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 --extra-index-url https://download.pytorch.org/whl/cu113")
     requirements_file = os.environ.get('REQS_FILE', "requirements_versions.txt")
-    commandline_args = os.environ.get('COMMANDLINE_ARGS', "")
+    commandline_args = os.environ.get('COMMANDLINE_ARGS', "--force-enable-xformers")
 
     gfpgan_package = os.environ.get('GFPGAN_PACKAGE', "git+https://github.com/TencentARC/GFPGAN.git@8d2447a2d918f8eba5a4a01463fd48e45126a379")
     clip_package = os.environ.get('CLIP_PACKAGE', "git+https://github.com/openai/CLIP.git@d50d76daa670286dd6cacf3bcd80b5e4823fc8e1")
-    deepdanbooru_package = os.environ.get('DEEPDANBOORU_PACKAGE', "git+https://github.com/KichangKim/DeepDanbooru.git@d91a2963bf87c6a770d74894667e9ffa9f6de7ff")
+    deepdanbooru_package = os.environ.get('DEEPDANBOORU_PACKAGE', "git+https://github.com/KichangKim/DeepDanbooru.git@edf73df4cdaeea2cf00e9ac08bd8a9026b7a7b26")
 
     xformers_windows_package = os.environ.get('XFORMERS_WINDOWS_PACKAGE', 'https://github.com/C43H66N12O12S2/stable-diffusion-webui/releases/download/f/xformers-0.0.14.dev0-cp310-cp310-win_amd64.whl')
 
@@ -156,15 +156,9 @@ def prepare_enviroment():
     if not is_installed("clip"):
         run_pip(f"install {clip_package}", "clip")
 
-    if (not is_installed("xformers") or reinstall_xformers) and xformers:
+    if (not is_installed("xformers") or reinstall_xformers) and xformers and platform.python_version().startswith("3.10"):
         if platform.system() == "Windows":
-            if platform.python_version().startswith("3.10"):
-                run_pip(f"install -U -I --no-deps {xformers_windows_package}", "xformers")
-            else:
-                print("Installation of xformers is not supported in this version of Python.")
-                print("You can also check this and build manually: https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Xformers#building-xformers-on-windows-by-duckness")
-                if not is_installed("xformers"):
-                    exit(0)
+            run_pip(f"install -U -I --no-deps {xformers_windows_package}", "xformers")
         elif platform.system() == "Linux":
             run_pip("install xformers", "xformers")
 

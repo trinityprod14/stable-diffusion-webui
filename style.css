@@ -3,11 +3,11 @@
 }
 
 #txt2img_token_counter {
-    height: 0px;
+    height: 10px;
 }
 
 #img2img_token_counter {
-    height: 0px;
+    height: 100px;
 }
 
 #sh{
@@ -33,11 +33,10 @@
 
 .performance {
     font-size: 0.85em;
-    color: #444;
-}
-
-.performance p{
-    display: inline-block;
+    color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
 }
 
 .performance .time {
@@ -45,6 +44,8 @@
 }
 
 .performance .vram {
+    margin-left: 0;
+    text-align: right;
 }
 
 #txt2img_generate, #img2img_generate {
@@ -220,10 +221,10 @@ fieldset span.text-gray-500, .gr-block.gr-box span.text-gray-500,  label.block s
 }
 
 .dark fieldset span.text-gray-500, .dark .gr-block.gr-box span.text-gray-500, .dark label.block span{
-    background-color: rgb(31, 41, 55);
-    border-top: 1px solid rgb(55 65 81);
-    border-left: 1px solid rgb(55 65 81);
-    border-right: 1px solid rgb(55 65 81);
+    background-color: rgb(0, 0, 0);
+    border-top: 1px solid rgb(0, 0, 0);
+    border-left: 1px solid rgb(0, 0, 0);
+    border-right: 1px solid rgb(0, 0, 0);
 }
 
 #settings fieldset span.text-gray-500, #settings .gr-block.gr-box span.text-gray-500, #settings label.block span{
@@ -282,13 +283,13 @@ input[type="range"]{
 }
 
 .dark .progressDiv{
-  background: #424c5b;
+  background: #000000;
 }
 
 .progressDiv .progress{
   width: 0%;
   height: 20px;
-  background: #0060df;
+  background: #ffffff;
   color: white;
   font-weight: bold;
   line-height: 20px;
@@ -307,7 +308,7 @@ input[type="range"]{
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(20, 20, 20, 0.95);
+  background-color: rgba(0, 0, 0, 0.95);
   user-select: none;
   -webkit-user-select: none;
 }
@@ -322,7 +323,7 @@ input[type="range"]{
     right: 0;
     padding: 16px;
     gap: 16px;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .modalClose {
@@ -410,7 +411,7 @@ input[type="range"]{
   position: absolute;
   width: 50%;
   height: 72px;
-  background: #b4c0cc;
+  background: #000000;
   border-radius: 0px;
   display: none;
 }
@@ -420,7 +421,7 @@ input[type="range"]{
   width: 50%;
   right: 0px;
   height: 72px;
-  background: #b4c0cc;
+  background: #000000;
   border-radius: 0px;
   display: none;
 }
@@ -514,78 +515,4 @@ img2maskimg, #img2maskimg > .h-60, #img2maskimg > .h-60 > div, #img2maskimg > .h
     height: 480px !important;
     max-height: 480px !important;
     min-height: 480px !important;
-}
-
-/* The following handles localization for right-to-left (RTL) languages like Arabic.
-The rtl media type will only be activated by the logic in javascript/localization.js.
-If you change anything above, you need to make sure it is RTL compliant by just running
-your changes through converters like https://cssjanus.github.io/ or https://rtlcss.com/.
-Then, you will need to add the RTL counterpart only if needed in the rtl section below.*/
-@media rtl {
-    /* this part was manualy added */
-    :host {
-        direction: rtl;
-    }
-    .output-html:has(.performance), .gr-text-input {
-        direction: ltr;
-    }
-    .gr-radio, .gr-checkbox{
-        margin-left: 0.25em;
-    }
-
-    /* this part was automatically generated with few manual modifications */
-    .performance .time {
-        margin-right: unset;
-        margin-left: 0;
-    }
-    .justify-center.overflow-x-scroll {
-        justify-content: right;
-    }
-    .justify-center.overflow-x-scroll button:first-of-type {
-        margin-left: unset;
-        margin-right: auto;
-    }
-    .justify-center.overflow-x-scroll button:last-of-type {
-        margin-right: unset;
-        margin-left: auto;
-    }
-    #settings fieldset span.text-gray-500, #settings .gr-block.gr-box span.text-gray-500, #settings label.block span{
-        margin-right: unset;
-        margin-left: 8em;
-    }
-    #txt2img_progressbar, #img2img_progressbar, #ti_progressbar{
-        right: unset;
-        left: 0;
-    }
-    .progressDiv .progress{
-        padding: 0 0 0 8px;
-        text-align: left;
-    }
-    #lightboxModal{
-        left: unset;
-        right: 0;
-    }
-    .modalPrev, .modalNext{
-        border-radius: 3px 0 0 3px;
-    }
-    .modalNext {
-        right: unset;
-        left: 0;
-        border-radius: 0 3px 3px 0;
-    }
-    #imageARPreview{
-        left:unset;
-        right:0px;
-    }
-    #txt2img_skip, #img2img_skip{
-        right: unset;
-        left: 0px;
-    }
-    #context-menu{
-        box-shadow:-1px 1px 2px #CE6400;
-    }
-    .gr-box > div > div > input.gr-text-input{
-        right: unset;
-        left: 0.5em;
-    }
 }

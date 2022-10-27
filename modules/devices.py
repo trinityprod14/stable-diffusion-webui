@@ -1,6 +1,7 @@
-import sys, os, shlex
 import contextlib
+
 import torch
+
 from modules import errors
 
 # has_mps is only available in nightly pytorch (for now), `getattr` for compatibility
@@ -8,22 +9,10 @@ has_mps = getattr(torch, 'has_mps', False)
 
 cpu = torch.device("cpu")
 
-def extract_device_id(args, name):
-    for x in range(len(args)):
-        if name in args[x]: return args[x+1]
-    return None
 
 def get_optimal_device():
     if torch.cuda.is_available():
-        from modules import shared
-
-        device_id = shared.cmd_opts.device_id
-
-        if device_id is not None:
-            cuda_device = f"cuda:{device_id}"
-            return torch.device(cuda_device)
-        else:
-            return torch.device("cuda")
+        return torch.device("cuda")
 
     if has_mps:
         return torch.device("mps")
@@ -45,7 +34,7 @@ def enable_tf32():
 
 errors.run(enable_tf32, "Enabling TF32")
 
-device = device_interrogate = device_gfpgan = device_swinir = device_esrgan = device_scunet = device_codeformer = None
+device = device_interrogate = device_gfpgan = device_bsrgan = device_esrgan = device_scunet = device_codeformer = get_optimal_device()
 dtype = torch.float16
 dtype_vae = torch.float16
 
@@ -81,7 +70,3 @@ def autocast(disable=False):
         return contextlib.nullcontext()
 
     return torch.autocast("cuda")
-
-# MPS workaround for https://github.com/pytorch/pytorch/issues/79383
-def mps_contiguous(input_tensor, device): return input_tensor.contiguous() if device.type == 'mps' else input_tensor
-def mps_contiguous_to(input_tensor, device): return mps_contiguous(input_tensor, device).to(device)
